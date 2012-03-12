@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		xmlns:redditfeed="services.redditfeed.*"
+		title="JSON Test">
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.serializers.utility.TypeUtility;
+			
+			import mx.events.FlexEvent;
+			
+			protected function list_creationCompleteHandler(event:FlexEvent):void
+			{
+				getRedditFeedResult.token = redditFeed.getRedditFeed();
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:CallResponder id="getRedditFeedResult"/>
+		<redditfeed:RedditFeed id="redditFeed"/>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	
+	
+	</fx:Declarations>
+	<s:List id="list" left="0" right="0" top="50" bottom="0"
+			creationComplete="list_creationCompleteHandler(event)">
+		<s:AsyncListView list="{TypeUtility.convertToCollection(getRedditFeedResult.lastResult.data.children)}"/>
+		<s:itemRenderer>
+			<fx:Component>
+				<s:IconItemRenderer fontSize="20" labelFunction="{myLabelFunction}">
+					<fx:Script>
+						<![CDATA[
+					
+							private function myLabelFunction(item:Object) : Object
+							{
+								if (item && item.data && item.data.title)
+									return item.data.title;
+								return null;
+							}
+						]]>
+					</fx:Script>
+				</s:IconItemRenderer>
+			</fx:Component>
+		</s:itemRenderer>
+	</s:List>
+	<s:Label x="29" y="14" fontSize="19" text="There is a list below..." verticalAlign="bottom"/>
+</s:View>

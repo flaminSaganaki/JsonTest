@@ -1,0 +1,91 @@
+
+<model xmlns="http://ns.adobe.com/Fiber/1.0">
+  <annotation name="ActionScriptGeneration">
+    <item name="FullyQualifyReferences">true</item>
+  </annotation>
+  <service name="RedditFeed">
+    <annotation name="ActionScriptGeneration">
+      <item name="ServiceType">HTTPMultiService</item>
+      <item name="Package">services.redditfeed</item>
+    </annotation>
+    <annotation name="ServiceTypeGroup">
+      <item name="ServiceBackendType">HTTPService</item>
+    </annotation>
+    <annotation name="ServiceConfig">
+      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
+      <item name="LINKED_FILE"></item>
+    </annotation>
+    <function name="getRedditFeed" return-type="RedditFeedData">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="ActionScriptGeneration">
+        <item name="SerializationFilter">com.adobe.serializers.json.JSONSerializationFilter</item>
+        <item name="method">GET</item>
+        <item name="url">http://www.reddit.com/.json</item>
+      </annotation>
+      <annotation name="url group">
+        <item name="completeURL">http://www.reddit.com/.json</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">data,kind</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+  </service>
+  <entity name="Data">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Data</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">RedditFeed</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="after" type="string" required="true"/>
+    <property name="before" type="opaque" required="true"/>
+    <property name="children" type="Children[]" required="true"/>
+    <property name="modhash" type="string" required="true"/>
+  </entity>
+  <entity name="Children">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Children</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">RedditFeed</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="data" type="Data" required="true"/>
+    <property name="kind" type="string" required="true"/>
+  </entity>
+  <entity name="RedditFeedData">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">RedditFeedData</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">RedditFeed</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="getRedditFeed">
+      <item name="propertySpecifier">data,kind</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="data" type="Data" required="true"/>
+    <property name="kind" type="string" required="true"/>
+  </entity>
+</model>
