@@ -28,41 +28,37 @@
             protected function view1_creationCompleteHandler(event : FlexEvent) : void
             {
                 redditJsonService.send();
+
+                list.addEventListener("imageClicked", imageClickedHandler);
+                list.addEventListener("labelClicked", labelClickedHandler);
+            }
+
+            private function imageClickedHandler(event : DataEvent) : void
+            {
+                trace("The image itself was clicked, the full URL is: " + event.data);
+            }
+
+            private function labelClickedHandler(event : Event) : void
+            {
+                trace("The label was clicked");
             }
         ]]>
     </fx:Script>
     <fx:Declarations>
+        <!-- Place non-visual elements (e.g., services, value objects) here -->
         <s:HTTPService id="redditJsonService"
                        result="httpservice1_resultHandler(event)"
                        url="http://www.reddit.com/.json"/>
-        <redditfeed:RedditFeed id="redditFeed"/>
-        <!-- Place non-visual elements (e.g., services, value objects) here -->
 
 
     </fx:Declarations>
     <s:List bottom="0"
             dataProvider="{myListDP}"
             id="list"
+            itemRenderer="renderers.BaseListRenderer"
             left="0"
             right="0"
             top="50">
-        <s:itemRenderer>
-            <fx:Component>
-                <s:IconItemRenderer fontSize="20"
-                                    labelFunction="{myLabelFunction}">
-                    <fx:Script>
-                        <![CDATA[
-                            private function myLabelFunction(item : Object) : Object
-                            {
-                                if (item && item.data && item.data.title)
-                                    return item.data.title;
-                                return null;
-                            }
-                        ]]>
-                    </fx:Script>
-                </s:IconItemRenderer>
-            </fx:Component>
-        </s:itemRenderer>
     </s:List>
     <s:Label fontSize="19"
              text="There is a list below..."
