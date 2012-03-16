@@ -6,11 +6,13 @@
         xmlns:s="library://ns.adobe.com/flex/spark">
     <fx:Script>
         <![CDATA[
-            import com.adobe.serializers.utility.TypeUtility;
-
-            import mx.collections.ArrayCollection;
-            import mx.events.FlexEvent;
-            import mx.rpc.events.ResultEvent;
+			import com.adobe.serializers.utility.TypeUtility;
+			
+			import flash.utils.getTimer;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			import mx.rpc.events.ResultEvent;
 
             [Bindable]
             private var myListDP : ArrayCollection;
@@ -21,7 +23,7 @@
             {
                 trace("Result: " + event.result);
                 theJsonResponse = JSON.parse(event.result as String);
-
+				
                 myListDP = new ArrayCollection(theJsonResponse.data.children);
             }
 
@@ -31,6 +33,7 @@
 
                 list.addEventListener("imageClicked", imageClickedHandler);
                 list.addEventListener("labelClicked", labelClickedHandler);
+				list.addEventListener("voteClicked", voteHandler);
             }
 
             private function imageClickedHandler(event : DataEvent) : void
@@ -38,16 +41,22 @@
                 trace("The image itself was clicked, the full URL is: " + event.data);
             }
 
-            private function labelClickedHandler(event : Event) : void
+            private function labelClickedHandler(event : DataEvent) : void
             {
-                trace("The label was clicked");
+                trace("The label was clicked and the page is at: " + event.data);
             }
+			
+			private function voteHandler(event:Event):void
+			{
+				trace("vote was clicked");
+			}
         ]]>
     </fx:Script>
     <fx:Declarations>
         <!-- Place non-visual elements (e.g., services, value objects) here -->
         <s:HTTPService id="redditJsonService"
                        result="httpservice1_resultHandler(event)"
+					   
                        url="http://www.reddit.com/.json"/>
 
 
