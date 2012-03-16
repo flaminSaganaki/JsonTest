@@ -8,6 +8,8 @@
         <![CDATA[
 			import com.adobe.serializers.utility.TypeUtility;
 			
+			import events.EventExtension;
+			
 			import flash.utils.getTimer;
 			
 			import mx.collections.ArrayCollection;
@@ -34,14 +36,20 @@
                 list.addEventListener("imageClicked", imageClickedHandler);
                 list.addEventListener("labelClicked", labelClickedHandler);
 				list.addEventListener("voteClicked", voteHandler);
+				list.addEventListener("backdropClicked", backdropClicked);
             }
+			
+			private function backdropClicked(event : EventExtension) : void
+			{
+				trace("The backdrop was clicked: " + event.data);
+			}
 
-            private function imageClickedHandler(event : DataEvent) : void
+            private function imageClickedHandler(event : EventExtension) : void
             {
                 trace("The image itself was clicked, the full URL is: " + event.data);
             }
 
-            private function labelClickedHandler(event : DataEvent) : void
+            private function labelClickedHandler(event : EventExtension) : void
             {
                 trace("The label was clicked and the page is at: " + event.data);
             }

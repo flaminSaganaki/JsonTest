@@ -1,5 +1,7 @@
 package renderers
 {
+    import events.EventExtension;
+    
     import flash.display.Bitmap;
     import flash.events.DataEvent;
     import flash.events.Event;
@@ -107,17 +109,23 @@ package renderers
 			//labelDisplay.setStyle("fontWeight", "bold");
 			labelDisplay.setStyle("fontSize", "20");
 			
+			addEventListener(MouseEvent.CLICK, backdropClickHandler);
             // create any additional children for your item renderer here
         }
-
-        private function imageClickHandler(event : MouseEvent) : void
-        {
-            dispatchEvent(new DataEvent("imageClicked", true, false, data.data.url));
-        }
+		
+		private function backdropClickHandler(event : MouseEvent) : void
+		{
+			dispatchEvent(new EventExtension("backdropClicked",data.data, true, false));
+		}
+		
+		private function imageClickHandler(event : MouseEvent) : void
+		{
+			dispatchEvent(new EventExtension("imageClicked",data.data, true, false));
+		}
 
         private function labelClickHandler(event : MouseEvent) : void
         {
-            dispatchEvent(new DataEvent("labelClicked", true, false, data.data.permalink));
+            dispatchEvent(new EventExtension("labelClicked",data.data, true, false));
         }
 		
 		private function voteClickHandler(event:MouseEvent):void
@@ -127,7 +135,7 @@ package renderers
 		
 		private function voteUp(event:MouseEvent):void
 		{
-			dispatchEvent(new DataEvent("upvoteClicked", true, false, data.data.url));
+			dispatchEvent(new EventExtension("upvoteClicked",data.data, true, false));
 		}
 
         /**
